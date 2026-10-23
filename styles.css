@@ -21,16 +21,16 @@ button{color:inherit}
 ::selection{background:var(--accent);color:var(--bg)}
 .skip-link{position:fixed;left:12px;top:-80px;background:var(--paper);color:var(--ink);padding:10px 14px;z-index:1000}
 .skip-link:focus{top:12px}
-.site-header{position:fixed;z-index:100;left:0;right:0;top:0;height:84px;padding:0 var(--pad);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid transparent;transition:.25s ease}
+.site-header{position:fixed;z-index:100;left:0;right:0;top:0;height:84px;padding:0 var(--pad);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(17,16,14,.94),rgba(17,16,14,.82));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);transition:background .25s ease,border-color .25s ease}
 .site-header.scrolled{background:rgba(17,16,14,.94);backdrop-filter:blur(16px);border-color:var(--line)}
 .brand{display:flex;flex-direction:column;line-height:.95;z-index:102}
 .brand-main,.footer-brand{font-family:"Fraunces",serif;font-size:27px;letter-spacing:.12em}
 .brand-sub{font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-top:6px;color:#d8d1c4}
-.nav{display:flex;align-items:center;gap:30px;font-size:13px}
+.nav{display:flex;align-items:center;gap:30px;font-size:13px;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.8)}
 .nav>a:not(.nav-cta){color:#e6ded1;position:relative}
 .nav>a:not(.nav-cta)::after{content:"";position:absolute;left:0;right:100%;bottom:-7px;height:1px;background:var(--accent);transition:right .2s ease}
 .nav>a:not(.nav-cta):hover::after,.nav>a:not(.nav-cta):focus-visible::after{right:0}
-.nav-cta{padding:12px 18px;border:1px solid rgba(255,255,255,.35)}
+.nav-cta{padding:12px 18px;border:1px solid rgba(255,255,255,.52);background:rgba(17,16,14,.55)}
 .menu-toggle{display:none;background:none;border:0;width:44px;height:44px;position:relative;z-index:102}
 .menu-toggle span{position:absolute;left:9px;width:26px;height:1px;background:currentColor;transition:.2s}
 .menu-toggle span:first-child{top:17px}.menu-toggle span:last-child{top:26px}
