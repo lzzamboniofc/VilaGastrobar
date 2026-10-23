@@ -1,0 +1,15 @@
+{
+  "name": "vila-gastrobar-site",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "preview": "vite --host 0.0.0.0",
+    "pendencias": "node scripts/check-pendencias.mjs",
+    "build": "node scripts/check-pendencias.mjs"
+  },
+  "devDependencies": {
+    "vite": "^7.1.7"
+  }
+}
