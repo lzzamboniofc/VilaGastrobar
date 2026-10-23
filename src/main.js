@@ -95,21 +95,48 @@ window.addEventListener('scroll', updateHeader, { passive: true });
 
 const menuButton = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav');
-const closeMenu = () => {
-  nav.classList.remove('open');
-  menuButton.setAttribute('aria-expanded', 'false');
-  document.body.classList.remove('menu-open');
+const menuLinks = [...nav.querySelectorAll('a')];
+const mobileQuery = window.matchMedia('(max-width: 900px)');
+let previousFocus = null;
+
+const setMenuOpen = (open) => {
+  const shouldOpen = open && mobileQuery.matches;
+  nav.classList.toggle('open', shouldOpen);
+  menuButton.setAttribute('aria-expanded', String(shouldOpen));
+  menuButton.setAttribute('aria-label', shouldOpen ? 'Fechar menu' : 'Abrir menu');
+  document.body.classList.toggle('menu-open', shouldOpen);
+  document.documentElement.classList.toggle('menu-open', shouldOpen);
+  if (shouldOpen) {
+    previousFocus = document.activeElement;
+    menuLinks[0]?.focus({ preventScroll: true });
+  } else if (previousFocus && nav.contains(document.activeElement)) {
+    menuButton.focus({ preventScroll: true });
+    previousFocus = null;
+  }
 };
-menuButton.addEventListener('click', () => {
-  const open = !nav.classList.contains('open');
-  nav.classList.toggle('open', open);
-  menuButton.setAttribute('aria-expanded', String(open));
-  document.body.classList.toggle('menu-open', open);
+
+menuButton.addEventListener('click', () => setMenuOpen(!nav.classList.contains('open')));
+menuLinks.forEach((link) => link.addEventListener('click', () => setMenuOpen(false)));
+document.addEventListener('keydown', (event) => {
+  if (!nav.classList.contains('open')) return;
+  if (event.key === 'Escape') {
+    setMenuOpen(false);
+    menuButton.focus({ preventScroll: true });
+  }
+  if (event.key === 'Tab') {
+    const focusables = [menuButton, ...menuLinks];
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
 });
-nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
-window.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') closeMenu();
-});
+mobileQuery.addEventListener('change', () => setMenuOpen(false));
 
 const dialog = document.querySelector('#lightbox');
 const dialogImage = dialog.querySelector('img');
