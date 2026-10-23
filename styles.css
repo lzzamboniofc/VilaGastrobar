@@ -13,7 +13,7 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--paper);font-family:"DM Sans",system-ui,sans-serif;overflow-x:hidden}
-body.menu-open{overflow:hidden}
+html.menu-open,body.menu-open{overflow:hidden;overscroll-behavior:none}
 img{display:block;width:100%}
 a{color:inherit;text-decoration:none}
 button,a{font:inherit}
@@ -125,8 +125,10 @@ button{color:inherit}
 @media(max-width:900px){
   .site-header{height:72px}
   .menu-toggle{display:block}
-  .nav{position:fixed;inset:0;background:#11100e;padding:110px 28px 36px;display:flex;flex-direction:column;align-items:stretch;gap:0;transform:translateX(100%);transition:transform .28s ease;z-index:101}
-  .nav.open{transform:none}.nav a{padding:19px 0;border-bottom:1px solid var(--line);font-size:18px}.nav .nav-cta{margin-top:28px;text-align:center;border:1px solid #574f44}
+  .site-header{background:#11100e;backdrop-filter:none;-webkit-backdrop-filter:none}
+  .site-header.scrolled{background:#11100e;backdrop-filter:none;-webkit-backdrop-filter:none}
+  .nav{position:absolute;top:100%;left:0;right:0;inset:auto 0 auto 0;width:100%;height:calc(100vh - 72px);height:calc(100dvh - 72px);padding:clamp(22px,6vh,54px) max(24px,var(--pad)) calc(36px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:0;background:#11100e;background-color:#11100e;overflow-y:auto;overscroll-behavior:contain;visibility:hidden;opacity:0;pointer-events:none;transform:translateY(-10px);transition:opacity .22s ease,transform .22s ease,visibility .22s ease;z-index:101;box-shadow:0 30px 60px rgba(0,0,0,.65)}
+  .nav.open{visibility:visible;opacity:1;pointer-events:auto;transform:none}.nav a{display:block;padding:20px 0;border-bottom:1px solid var(--line);font-size:19px;line-height:1.4;text-shadow:none}.nav .nav-cta{margin-top:28px;text-align:center;border:1px solid #574f44;padding:17px;background:var(--accent);color:#18130d}.menu-toggle{touch-action:manipulation}.floating-cta{transition:opacity .2s ease}.menu-open .floating-cta{opacity:0;pointer-events:none}
   .menu-toggle[aria-expanded="true"] span:first-child{top:22px;transform:rotate(45deg)}.menu-toggle[aria-expanded="true"] span:last-child{top:22px;transform:rotate(-45deg)}
   .hero{padding:120px 20px 80px}.hero-copy{width:100%}.hero-note{display:none}.hero-shade{background:linear-gradient(0deg,rgba(10,9,8,.96) 0%,rgba(10,9,8,.66) 58%,rgba(10,9,8,.18) 100%)}.hero-media{object-position:55% center}
   .intro{grid-template-columns:1fr;padding:90px 20px;gap:34px}.intro-figure{grid-column:auto;height:68vh;min-height:460px}
@@ -145,4 +147,41 @@ button{color:inherit}
 }
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}
+}
+
+/* Refinamentos mobile-first */
+section[id]{scroll-margin-top:82px}
+@media(max-width:900px){
+  .hero{min-height:100svh;min-height:100dvh}
+  .hero-copy{max-width:640px}
+  .intro,.table-section,.gallery,.visit,.faq{min-width:0}
+  .gallery-item{min-width:0}
+  .table-heading,.visit-main,.intro-lead{min-width:0}
+  .table-section .menu-lines{min-width:0}
+  .sunday-inner{max-width:700px}
+}
+@media(max-width:600px){
+  .hero{padding:118px 20px 92px}
+  .hero h1{font-size:clamp(48px,12.8vw,70px);line-height:.98;overflow-wrap:normal}
+  .hero-text{margin-top:24px}
+  .intro,.table-section,.gallery,.visit,.faq{padding-top:72px;padding-bottom:72px}
+  .intro-figure{min-height:0;height:380px}
+  .table-aside{height:350px}
+  .gallery-grid{grid-template-rows:270px 220px 270px}
+  .sunday-inner{padding:76px 20px}
+  .visit-actions .button{flex:1 1 190px}
+  .hour-row{gap:12px}
+  .faq-question{min-height:64px;align-items:center}
+  .footer{padding-bottom:110px}
+}
+@media(max-width:360px){
+  .brand-main{font-size:24px}
+  .hero h1{font-size:clamp(43px,12.6vw,49px)}
+  .intro h2,.table-heading h2,.gallery h2,.visit h2,.faq h2{font-size:clamp(36px,11.8vw,43px)}
+  .sunday h2{font-size:clamp(43px,12vw,53px)}
+  .sunday-ribbon{font-size:12px;gap:6px}
+  .contact-line{overflow-wrap:anywhere}
+}
+@media(prefers-reduced-motion:reduce){
+  .nav{transition:none}
 }
